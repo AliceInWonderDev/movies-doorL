@@ -4,7 +4,8 @@ import Header from './Components/Header';
 import Search from './Components/Search';
 import Error from './Components/Error';
 import Movies from './Components/Movies';
-// import Axios from 'axios';
+
+ import Axios from 'axios';
 // import { async } from 'q';
 // const axios = require('axios')
 
@@ -13,26 +14,44 @@ const [searchInp, setSearchInp] = useState('');
 const [error, setError] = useState(false);
 const [result, setResult] = useState({});
 
-useEffect(()=>{
-  if(searchInp === '')return;
+function url(name){
+  return `http://www.omdbapi.com/?t=${name}&apikey=14ec011b`
+}
 
-  const getApi = async () =>{
+useEffect(()=>{
+  if(searchInp === ''){
+    return;
+  }else if (searchInp !== ''){
+    let name = searchInp;
+    console.log(name)
+  }
   
-    const movies = ["0100669", "3896198", "0373889", "0417741", "0926084", "1201607", "3183660", "4123430"];
-    for(let i=0; i < movies.length; i++){
-      // let name = searchInp.value
-      let url = `http://www.omdbapi.com/?i=tt${movies[i]}&apikey=14ec011b`;
-      // let url = 'http://www.omdbapi.com/?i=tt3896198&apikey=14ec011b';
-      const resp = await fetch(url);
-      const result = await resp.json();
-      console.log(movies[i])
+
+
+  const getApi = async (searchInp) =>{
+  if(searchInp !== ''){
+    console.log(url())
+  }
+try{
+      Axios.get(url())
+        .then(function(res){
+          console.log('This is a GET: ' + JSON.stringify(res));
+          
+        })
+        .catch(function (error) {
+          console.log('This is a Catch: ' + error);
+        })
+      }catch(error){
+        console.error(`This is a error: ' + ${error.code}`);
+        }
+
       setResult(result)
-      console.log(url)
-    }
+      
+    // }
     
   }  
   getApi(); 
-}, [searchInp])
+})
 
 const dataConsulta = data => {
   // Validar que ambos campos estén

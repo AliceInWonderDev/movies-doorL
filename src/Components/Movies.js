@@ -16,7 +16,7 @@ function Movies({result}) {
                     {result.Released} 
                 </span>
                 <p>
-                {result.Poster}
+                {/* {result.Poster} */}
                 </p>
             </Card.Body>
         </Card>
