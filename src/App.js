@@ -4,10 +4,8 @@ import Header from './Components/Header';
 import Search from './Components/Search';
 import Error from './Components/Error';
 import Movies from './Components/Movies';
+import Axios from 'axios';
 
- import Axios from 'axios';
-// import { async } from 'q';
-// const axios = require('axios')
 
 function App() {
 const [searchInp, setSearchInp] = useState('');
@@ -16,6 +14,7 @@ const [result, setResult] = useState({});
 
 function url(name){
   return `http://www.omdbapi.com/?t=${name}&apikey=14ec011b`
+  
 }
 
 useEffect(()=>{
@@ -25,18 +24,14 @@ useEffect(()=>{
     let name = searchInp;
     console.log(name)
   }
+
+  const getApi = async (name) =>{
   
-
-
-  const getApi = async (searchInp) =>{
-  if(searchInp !== ''){
-    console.log(url())
-  }
 try{
-      Axios.get(url())
+      Axios.get(url(name))
         .then(function(res){
           console.log('This is a GET: ' + JSON.stringify(res));
-          
+          console.log('inventando' + JSON.stringify(url(name)))
         })
         .catch(function (error) {
           console.log('This is a Catch: ' + error);
@@ -46,11 +41,9 @@ try{
         }
 
       setResult(result)
-      
-    // }
     
   }  
-  getApi(); 
+  getApi(url()); 
 })
 
 const dataConsulta = data => {
@@ -62,6 +55,7 @@ const dataConsulta = data => {
 
   // Ciudad y pais existen, agregarlos al state
   setSearchInp(data.searchInp);
+  console.log(data)
   setError(false);
 }
 

@@ -13,7 +13,7 @@ function Movies({result}) {
                 { result.Year }  
                 </p>
                 <span> 
-                    {result.Released} 
+                    { result.Released } 
                 </span>
                 <p>
                 {/* {result.Poster} */}
