@@ -9,9 +9,11 @@ function Search ({dataConsulta}) {
     
     const handleChange = (e) => {
         setSearch({
-            search,
+            ...search,
             [e.target.name] : e.target.value
+            
         })
+        
     };
     
     const movieFinder = e => {

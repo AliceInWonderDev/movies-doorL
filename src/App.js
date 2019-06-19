@@ -8,55 +8,55 @@ import Axios from 'axios';
 
 
 function App() {
+
 const [searchInp, setSearchInp] = useState('');
 const [error, setError] = useState(false);
-const [result, setResult] = useState({});
+const [result, setResult] = useState([]);
 
 function url(name){
   return `http://www.omdbapi.com/?t=${name}&apikey=14ec011b`
   
+}
+function getDataApi(name){
+  console.log('this is result' + result)
+  try{
+    Axios.get(url(name))
+      .then(function(res){
+      // console.log('This is a GET: ' + JSON.stringify(result));
+      setResult([
+        ...result,
+        res
+      ])
+
+      })
+      .catch(function (error) {
+        console.log('This is a Catch: ' + error);
+      })
+}catch(error){
+      console.error(`This is a error: ' + ${error.code}`);
+}
 }
 
 useEffect(()=>{
   if(searchInp === ''){
     return;
   }else if (searchInp !== ''){
-    let name = searchInp;
-    console.log(name)
-  }
-
-  const getApi = async (name) =>{
-  
-try{
-      Axios.get(url(name))
-        .then(function(res){
-          console.log('This is a GET: ' + JSON.stringify(res));
-          console.log('inventando' + JSON.stringify(url(name)))
-        })
-        .catch(function (error) {
-          console.log('This is a Catch: ' + error);
-        })
-      }catch(error){
-        console.error(`This is a error: ' + ${error.code}`);
-        }
-
-      setResult(result)
     
+    console.log(url(searchInp))
   }  
-  getApi(url()); 
 })
 
 const dataConsulta = data => {
+  
   // Validar que ambos campos estén
   if(data.searchInp === '') {
     setError(true);
     return;
+  }else{
+    setSearchInp( data.searchInp );
+    setError(false);
+    getDataApi(data.searchInp)
   }
-
-  // Ciudad y pais existen, agregarlos al state
-  setSearchInp(data.searchInp);
-  console.log(data)
-  setError(false);
 }
 
 
@@ -70,7 +70,7 @@ let componente;
   } else {
     // Mostrar el Clima
     componente = <Movies 
-                  result={result}
+                  resultArray={result}
                 />;
   }
 
